@@ -2,7 +2,7 @@
 
   <h1 align="center">Video Tutorial Transcribe</h1>
 <p align="center">
-  Step-by-Step guide for video tutorial with opne sourced tools and scripts . 
+  Step-by-Step guide for video tutorial with open sourced tools and scripts . 
 </p>
 
 
