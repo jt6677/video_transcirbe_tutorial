@@ -7,7 +7,7 @@
 
 
 ## Extract audio from video using FFmpeg
-### 1. Install [Chocolatey](https://chocolatey.org/install#individual) to easy installation of FFmpeg
+### 1. Install [Chocolatey](https://chocolatey.org/install#individual) for easy installation of FFmpeg
 - Open PowerShell with administrator rights. Navigate to the start menu, search for "PowerShell", right-click, and choose "Run as administrator".
 - Run command `Set-ExecutionPolicy Bypass -Scope Process -Force`
 (This command temporarily bypasses certain security restrictions allowing us to install Chocolatey.)
@@ -57,7 +57,7 @@ $videoFiles | ForEach-Object {
 }
 ```
 
-option b(multi-thread):
+option B (multi-thread):
 - install PowerShell 7, download [PowerShell-7.3.6-win-x64.msi](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3#msi) 
 - adjust to your video folder using $rootPath = "Z:\zensive\zensive"
 - adjust '$threadCount = 16' to match your CPU's thread count.
@@ -97,7 +97,7 @@ $videoFiles | ForEach-Object -ThrottleLimit $threadCount -Parallel {
      
 
 
-## Extract audio from video using FFmpeg
+## Transcribe audio to text using Whipser AI library
 ### Install [WhisperPS](https://github.com/Const-me/Whisper/releases) 
 - Extract and copy the extracted WhisperPS folder  to 'C:\Users\XXXX\Documents\WindowsPowerShell\Modules', where 'XXXX' is your windows username.
 ### Download a Whisper AI model  https://huggingface.co/ggerganov/whisper.cpp/tree/main 
@@ -115,12 +115,30 @@ $Model = Import-WhisperModel $ModelPath
 # Transcribe all *.mp3 and *.m4a files in the defined folder and its subfolders
 Get-ChildItem -Path $videoFolderPath -Recurse -include *.mp3, *.m4a | Transcribe-File $Model | foreach { $_ | Export-Text (Join-Path -Path $videoFolderPath -ChildPath ($_.SourceName + ".txt")) }
 ```
+## Feed the text files to AI tool of your choice
+### chatGPT
+- You can prompt chatGPT to take multiple text files. Use original prompt like this 
+```
+Please provide an in-depth summary of the key ideas and details in the provided passage. I will give the passages in multiple prompts.  Include the following in your summary:
 
+An introduction briefly describing the overall topic and purpose of the passage
+A detailed breakdown of each main idea or section, summarizing the key points and supporting details
+Examples, quotes, or specific data used in the passage to illustrate the concepts
+An explanation of how ideas connect and build off each other
+A conclusion restating the main purpose and highlighting the most important takeaways
+Be comprehensive but concise in summarizing all relevant points and information
+Use your own words as much as possible while accurately representing the original content
+Please write your response in multiple paragraphs, providing as much relevant detail and expansion on the passage as you can .  If you understand, reply yes so we can continue.
+```
+- Then you can paste in multiple prompt, just do not exceed the token limit.
 
+ ### Claude
+ - You can just drag and drop multiple text files to claude. Claude has a much longer token length.
+   
 ## Author
 
 - Ed ([@ed_zensive](https://twitter.com/zensive_ed))
 
 ## License
 
-Licensed under the [MIT license](https://github.com/steven-tey/novel/blob/main/LICENSE.md).
+Licensed under the [MIT license](https://github.com/steven-tey/novel/blob/main/LICENSE.md). 
