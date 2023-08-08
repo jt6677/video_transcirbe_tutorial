@@ -31,7 +31,7 @@ $rootPath = "g:\zensive"
 
 # Create root mp3 directory
 $rootMp3Folder = Join-Path -Path $rootPath -ChildPath "mp3"
-if(!(Test-Path -Path $rootMp3Folder)) {
+if (-not (Test-Path -Path $rootMp3Folder)) {
     New-Item -ItemType directory -Path $rootMp3Folder
 }
 
@@ -39,21 +39,35 @@ if(!(Test-Path -Path $rootMp3Folder)) {
 $videoFormats = @("*.mp4", "*.avi", "*.mkv", "*.mov", "*.wmv")
 
 # Get all video files in all directories
-$videoFiles = $videoFormats | ForEach-Object { Get-ChildItem -LiteralPath $rootPath -Recurse -Filter $_ }
+$videoFiles = $videoFormats | ForEach-Object { Get-ChildItem -Path $rootPath -Recurse -Filter $_ }
 
 # Process each file
 $videoFiles | ForEach-Object {
-    # Create the sub directory path
-    $subDirectoryPath = $_.Directory.FullName.Replace($rootPath, $rootMp3Folder)
-    # Check and create sub directory if not exists
-    if(!(Test-Path -Path $subDirectoryPath)) {
-        New-Item -ItemType directory -Path $subDirectoryPath
+    Write-Output "Processing $($_.FullName)"
+
+    # Determine the relative sub-directory
+    $relativeSubDir = $_.DirectoryName.Substring($rootPath.Length)
+
+    # Construct the new directory for mp3 under root mp3 folder
+    $mp3SubDir = Join-Path -Path $rootMp3Folder -ChildPath $relativeSubDir
+
+    # Create the directory if it doesn't exist
+    if (-not (Test-Path -Path $mp3SubDir)) {
+        New-Item -ItemType directory -Path $mp3SubDir
     }
 
     # Convert video to mp3
-    $mp3Path = Join-Path -Path $subDirectoryPath -ChildPath ($_.BaseName + '.mp3')
-    ffmpeg -i $_.FullName -vn -acodec libmp3lame $mp3Path
+    $mp3Path = Join-Path -Path $mp3SubDir -ChildPath ($_.BaseName + '.mp3')
+    
+    if (-not (Test-Path $mp3Path)) {
+        & ffmpeg -i $_.FullName -vn -acodec libmp3lame $mp3Path
+    } else {
+        Write-Output "$mp3Path already exists. Skipping."
+    }
 }
+
+Write-Output "All videos processed."
+
 ```
 
 option B (multi-thread):
@@ -69,7 +83,7 @@ $threadCount = 16
 
 # Create root mp3 directory
 $rootMp3Folder = Join-Path -Path $rootPath -ChildPath "mp3"
-if(!(Test-Path -Path $rootMp3Folder)) {
+if (!(Test-Path -Path $rootMp3Folder)) {
     New-Item -ItemType directory -Path $rootMp3Folder
 }
 
@@ -81,17 +95,29 @@ $videoFiles = $videoFormats | ForEach-Object { Get-ChildItem -LiteralPath $rootP
 
 # Process each file in parallel
 $videoFiles | ForEach-Object -ThrottleLimit $threadCount -Parallel {
-    # Create the sub directory path
-    $subDirectoryPath = $_.Directory.FullName.Replace($using:rootPath, $using:rootMp3Folder)
+    # Get the relative directory path of the current video file compared to the `$rootPath`
+    $relativeDirectory = $_.Directory.FullName.Substring($using:rootPath.Length)
+
+    # Create the sub directory path by joining this relative directory path to the `$rootMp3Folder`
+    $subDirectoryPath = Join-Path $using:rootMp3Folder $relativeDirectory
+
     # Check and create sub directory if not exists
-    if(!(Test-Path -Path $subDirectoryPath)) {
+    if (!(Test-Path -Path $subDirectoryPath)) {
         New-Item -ItemType directory -Path $subDirectoryPath
     }
 
     # Convert video to mp3
     $mp3Path = Join-Path -Path $subDirectoryPath -ChildPath ($_.BaseName + '.mp3')
-    ffmpeg -i $_.FullName -vn -acodec libmp3lame $mp3Path
+    
+    # Check if the mp3 file already exists
+    if (Test-Path $mp3Path) {
+        Write-Output "$mp3Path already exists. Skipping."
+    } else {
+        ffmpeg -i $_.FullName -vn -acodec libmp3lame $mp3Path
+    }
 }
+Write-Output "All videos processed."
+
 ```
      
 
