@@ -9,7 +9,10 @@
 ## Extract audio from video using FFmpeg
 ### 1. Install [Chocolatey](https://chocolatey.org/install#individual) for easy installation of FFmpeg
 - Open PowerShell with administrator rights. Navigate to the start menu, search for "PowerShell", right-click, and choose "Run as administrator".
-- Run command `Set-ExecutionPolicy Bypass -Scope Process -Force`
+- Run command 
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force
+```
 (This command temporarily bypasses certain security restrictions allowing us to install Chocolatey.)
 
 - Run command to install chocolatey
