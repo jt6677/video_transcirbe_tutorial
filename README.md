@@ -145,7 +145,7 @@ Get-ChildItem -Path $videoFolderPath -Recurse -include *.mp3, *.m4a | Transcribe
 ### chatGPT
 - You can prompt chatGPT to take multiple text files. Use original prompt like this 
 ```
-Please provide an in-depth summary of the key ideas and details in the provided passage. I will give the passages in multiple prompts.  Include the following in your summary:
+ I will give multiple passages in multiple prompts.  Please provide an in-depth summary of the key ideas and details in the provided passages.  Wait till I provide all the passages.  If you understand, reply yes so we can continue.  Include the following in your summary:
 
 An introduction briefly describing the overall topic and purpose of the passage
 A detailed breakdown of each main idea or section, summarizing the key points and supporting details
@@ -154,7 +154,7 @@ An explanation of how ideas connect and build off each other
 A conclusion restating the main purpose and highlighting the most important takeaways
 Be comprehensive but concise in summarizing all relevant points and information
 Use your own words as much as possible while accurately representing the original content
-Please write your response in multiple paragraphs, providing as much relevant detail and expansion on the passage as you can .  If you understand, reply yes so we can continue.
+Please write your response in multiple paragraphs, providing as much relevant detail and expansion on the passage as you can . 
 ```
 - Then you can paste in multiple prompt, just do not exceed the token limit.
 
