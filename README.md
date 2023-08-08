@@ -28,7 +28,7 @@ option A (single thread):
 - Default powershell command, adjust to your video folder using $rootPath = "Z:\zensive\zensive"
 ```
 # Define the root path
-$rootPath = "Z:\zensive\zensive"
+$rootPath = "g:\zensive"
 
 # Create root mp3 directory
 $rootMp3Folder = Join-Path -Path $rootPath -ChildPath "mp3"
@@ -63,7 +63,7 @@ option B (multi-thread):
 - adjust '$threadCount = 16' to match your CPU's thread count.
 ```
 # Define the root path
-$rootPath = "Z:\zensive\zensive"
+$rootPath = "g:\zensive"
 
 # Set thread count
 $threadCount = 16
@@ -105,7 +105,7 @@ $videoFiles | ForEach-Object -ThrottleLimit $threadCount -Parallel {
 ### Run powershell script after adjusting videoFolderPath = "G:\summary\mp3"
 ```
 # Define the path to the folder containing the video files
-$videoFolderPath = "G:\summary\mp3"
+$videoFolderPath = "g:\zensive\mp3"
 
 # Import the Whisper module
 Import-Module WhisperPS -DisableNameChecking
