@@ -156,6 +156,8 @@ Be comprehensive but concise in summarizing all relevant points and information
 Use your own words as much as possible while accurately representing the original content
 Please write your response in multiple paragraphs, providing as much relevant detail and expansion on the passage as you can . 
 ```
+![chatGPT-multi-prompts](https://i.imgur.com/9ZaJcx0.png)
+
 - Then you can paste in multiple prompt, just do not exceed the token limit.
 
  ### Claude
