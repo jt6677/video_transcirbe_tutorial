@@ -24,7 +24,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 
 ### 3. Run script to extract audio
 option A (single thread):
-- Default powershell command, adjust to your video folder using $rootPath = "Z:\zensive\zensive"
+- Default powershell command, adjust to your video folder using $rootPath = "g:\zensive"
 ```
 # Define the root path
 $rootPath = "g:\zensive"
@@ -72,7 +72,7 @@ Write-Output "All videos processed."
 
 option B (multi-thread):
 - install PowerShell 7, download [PowerShell-7.3.6-win-x64.msi](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3#msi) 
-- adjust to your video folder using $rootPath = "Z:\zensive\zensive"
+- adjust to your video folder using $rootPath = "g:\zensive"
 - adjust '$threadCount = 16' to match your CPU's thread count.
 ```
 # Define the root path
