@@ -5,6 +5,11 @@
   Step-by-Step guide for video tutorial with open sourced tools and scripts . 
 </p>
 
+## Youtube video
+
+  <img src=https://i.imgur.com/7T5pvrp.png />
+
+Youtube Video :  https://www.youtube.com/watch?v=WlFPXAFX1uM)
 
 ## Extract audio from video using FFmpeg
 ### 1. Install [Chocolatey](https://chocolatey.org/install#individual) for easy installation of FFmpeg
